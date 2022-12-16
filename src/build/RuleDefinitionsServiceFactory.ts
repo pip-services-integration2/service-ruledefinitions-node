@@ -5,7 +5,7 @@ import { RuleDefinitionsMongoDbPersistence } from '../persistence/RuleDefinition
 import { RuleDefinitionsFilePersistence } from '../persistence/RuleDefinitionsFilePersistence';
 import { RuleDefinitionsMemoryPersistence } from '../persistence/RuleDefinitionsMemoryPersistence';
 import { RuleDefinitionsController } from '../logic/RuleDefinitionsController';
-import { RuleDefinitionsHttpServiceV1 } from '../services/version1/RuleDefinitionsHttpServiceV1';
+import { RuleDefinitionsCommandableHttpServiceV1 } from '../services/version1/RuleDefinitionsCommandableHttpServiceV1';
 
 export class RuleDefinitionsServiceFactory extends Factory {
 	public static Descriptor = new Descriptor("service-ruledefinitions", "factory", "default", "default", "1.0");
@@ -13,7 +13,7 @@ export class RuleDefinitionsServiceFactory extends Factory {
 	public static FilePersistenceDescriptor = new Descriptor("service-ruledefinitions", "persistence", "file", "*", "1.0");
 	public static MongoDbPersistenceDescriptor = new Descriptor("service-ruledefinitions", "persistence", "mongodb", "*", "1.0");
 	public static ControllerDescriptor = new Descriptor("service-ruledefinitions", "controller", "default", "*", "1.0");
-	public static HttpServiceDescriptor = new Descriptor("service-ruledefinitions", "service", "http", "*", "1.0");
+	public static CmdHttpServiceDescriptor = new Descriptor("service-ruledefinitions", "service", "commandable-http", "*", "1.0");
 	
 	constructor() {
 		super();
@@ -21,7 +21,7 @@ export class RuleDefinitionsServiceFactory extends Factory {
 		this.registerAsType(RuleDefinitionsServiceFactory.FilePersistenceDescriptor, RuleDefinitionsFilePersistence);
 		this.registerAsType(RuleDefinitionsServiceFactory.MongoDbPersistenceDescriptor, RuleDefinitionsMongoDbPersistence);
 		this.registerAsType(RuleDefinitionsServiceFactory.ControllerDescriptor, RuleDefinitionsController);
-		this.registerAsType(RuleDefinitionsServiceFactory.HttpServiceDescriptor, RuleDefinitionsHttpServiceV1);
+		this.registerAsType(RuleDefinitionsServiceFactory.CmdHttpServiceDescriptor, RuleDefinitionsCommandableHttpServiceV1);
 	}
 	
 }

@@ -1,14 +1,14 @@
 const restify = require('restify');
 const assert = require('chai').assert;
 
-import { ConfigParams, MultiString, FilterParams, PagingParams } from 'pip-services3-commons-nodex';
+import { ConfigParams, FilterParams, PagingParams } from 'pip-services3-commons-nodex';
 import { Descriptor } from 'pip-services3-commons-nodex';
 import { References } from 'pip-services3-commons-nodex';
 
 import { RuleV1 } from '../../../src/data/version1/RuleV1';
 import { RuleDefinitionsMemoryPersistence } from '../../../src/persistence/RuleDefinitionsMemoryPersistence';
 import { RuleDefinitionsController } from '../../../src/logic/RuleDefinitionsController';
-import { RuleDefinitionsHttpServiceV1 } from '../../../src/services/version1/RuleDefinitionsHttpServiceV1';
+import { RuleDefinitionsCommandableHttpServiceV1 } from '../../../src/services/version1/RuleDefinitionsCommandableHttpServiceV1';
 import { RulePriorityV1 } from '../../../src/data/version1';
 
 let httpConfig = ConfigParams.fromTuples(
@@ -53,9 +53,9 @@ let RULE3: RuleV1 = {
     disabled: true
 };
 
-suite('RuleDefinitionsHttpServiceV1', () => {
+suite('RuleDefinitionsCommandableHttpServiceV1', () => {
     let persistence: RuleDefinitionsMemoryPersistence;
-    let service: RuleDefinitionsHttpServiceV1;
+    let service: RuleDefinitionsCommandableHttpServiceV1;
     let rest: any;
 
     setup(async () => {
@@ -66,13 +66,13 @@ suite('RuleDefinitionsHttpServiceV1', () => {
 
         persistence = new RuleDefinitionsMemoryPersistence();
 
-        service = new RuleDefinitionsHttpServiceV1();
+        service = new RuleDefinitionsCommandableHttpServiceV1();
         service.configure(httpConfig);
 
         let references: References = References.fromTuples(
             new Descriptor('service-ruledefinitions', 'persistence', 'memory', 'default', '1.0'), persistence,
             new Descriptor('service-ruledefinitions', 'controller', 'default', 'default', '1.0'), controller,
-            new Descriptor('service-ruledefinitions', 'service', 'http', 'default', '1.0'), service
+            new Descriptor('service-ruledefinitions', 'service', 'commandable-http', 'default', '1.0'), service
         );
         controller.setReferences(references);
         service.setReferences(references);
